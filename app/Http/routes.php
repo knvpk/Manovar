@@ -75,3 +75,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('user/{user}/delete', 'Admin\UserController@delete');
     Route::resource('user', 'Admin\UserController');
 });
+
+
+Route::get('test',function(){
+   return env('APP_ENV');
+});

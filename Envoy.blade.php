@@ -10,6 +10,7 @@ $release = 'release_' . date('YmdHis');
 @macro('deploy', ['on' => 'application_server'])
 fetch_repo
 run_composer
+datatbase_init
 update_permissions
 update_symlinks
 @endmacro
@@ -25,6 +26,11 @@ cd {{ $release_dir }}/{{ $release }}
 composer install --prefer-dist --no-scripts;
 php artisan clear-compiled --env=production;
 php artisan optimize --env=production;
+@endtask
+
+@task('datatbase_init')
+cd {{ $release_dir }}/{{ $release }}
+php artisan migrate --force --seed --env=production
 @endtask
 
 @task('update_permissions')
@@ -47,5 +53,5 @@ cd {{ $release_dir }}/{{ $release }}/storage;
 ln -nfs ../../../logs logs;
 chgrp -h www-data logs;
 
-sudo service php-fpm reload;
+sudo service php5-fpm reload;
 @endtask

@@ -78,5 +78,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 
 Route::get('test',function(){
-   return env('APP_ENV');
+   return config('database.connections.mysql.password');
 });
